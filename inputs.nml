@@ -1,0 +1,144 @@
+&inputs
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BEGIN INPUTS
+!!!!!!!!!!!!! grid options
+aspect=1.d0       !!aspect ratio of Cartesian domain
+nx=100            !!# of cells in the horizontal
+nz=100            !!# of cells in the vertical
+Database=2        !!ordering of streamfunction and buoyancy vectors -- 1 (large nz), 2 (large nx), or 3 (experiment)
+order=4           !!space order: even numbers
+gridX=0           !!0=uniform,1=arctan
+gridZ=0           !!0=uniform,1=arctan,2=boundary layer
+thickness=0.1d0   !!gridZ=2: thickness of grid boundary layer
+nbound=8          !!# of cell corners in boundary layer grid
+spaceX=1.d0       !!stretching factor for arctan function
+spaceZ=1.d0       !!stretching factor for arctan and boundary layer grids
+!!!!!!!!!!!!! end grid options
+
+!!!!!!!!!!!!!velocity solver options
+iterate=0         !!how to solve for the velocities?: 0=direct method, 1=iterative method
+MG=1              !!multigrid?
+non_Newtonian=0   !!is the fluid non-Newtonian? (only works if iterate=1)
+tolerance=1.d-3   !!tolerance for multigrid -- smaller values indicate more accurate solutions
+Nmulti=1!70         !!# of iterations on each multigrid level (~70 for Newtonian flows)
+mingrid=4         !!min grid size (<nx and <nz)
+grids=2           !!max # of multigrid levels (currently between 2 and 6)
+eig_ratio=1.d0    !!min ratio of diffusive to advective eigenvalues desired on coarse grids
+vis_iter=12       !!max # of viscosity smoother iterations for multigrid
+max_cycles=1000   !!max # of multigrid cycles allowed for convergence before code stops
+tol_coarse=1.d-3  !!tolerance for fixed point iterations of coarse equation
+fp_max=100        !!max # of fixed point iterations done on the coarse equation for non-Newtonian flows
+splitting=0       !!operator splitting in multigrid smoother?
+RKC1=1            !!Time stepping method for fine grid smoother: 0=use RK1, 1=use RKC1
+nstageS=35         !!# of stages in RKC1 fine grid smoother
+dampingS=1000.d0     !!damping factor for RKC1 fine grid smoother
+c_2=0.95d0          !!courant # range for RKC1 smoother
+c_1=0.9d0
+!!!!!!!!!!!!!end velocity solver options
+
+!!!!!!!!!!!!! time stepping options
+tend=1.d-10              !!total nondimensional time 
+tsnap=1.d-10         !!output snapshots are taken at this time interval
+Chebyshev=0             !!0=classical RK, 1=RK Chebyshev (RKC) method (torder=2 and tracer=1 required below)
+nstage=3                !!equals # of stages used in the RKC method
+damping=100.d0          !!damping parameter for RKC method
+aRK2=0.5d0              !!alpha value for RK2 time integration and first stage of RKC
+torder=4                !!order of RK method: RK2 only if temperature tracers are used - RK4 for field method and/or tracers (2 and 4 currently available)
+movie=0                 !!create movie files? (under development...)
+tmovie_snap=1.d0 !!time intervals for movie frames
+Nlocal=1000                  !!if local time steps ARE used, run controlled by iteration cutoff
+Nsnap=100               !!if local time steps ARE used, snapshots controlled by iteration count
+local_time=0            !!only use with RK4 without updates (for field methods primarily)
+dt_manual=0.125d0          !!manual time step size for isothermal convection
+courant=0.99d0!2.25d0          !!factor that multiplies the time step size computed from stability analysis (0.99 for RK2, 2.25 for RKC)
+courantT=0.99d0         !!for temperature smoother
+courantC=0.99d0         !!for composition smoother
+courant_stream=0.99d0   !!for iterative solver
+RK_update=1             !!update the velocities between RK stages? (use 0 for steady state problems, 1 for time accurate runs, 2 for 2 updates during RK4)
+vel_update=1            !!frequency of velocity updates: 0=every other time step, 1=every time step
+CFL=0                   !!use velocity-dependent time steps? (for RK1 only)
+!!!!!!!!!!!!! end time stepping options
+
+!!!!!tracer options
+comp=1                  !!switch for composition: 0=off,1=on
+ntype=1                 !!# of enriched compositions:=0 for uniform composition with T tracers, >=1 for heterogenious composition
+iC_continuous=1         !!continuous C values carried by tracers? (for iC_continuous=1 equalize=0 AND ntype=1 are required)
+original=1              !!use original TRA? (short term isoviscous calculations)
+shape_function=1        !!0 for constant cell, 1 for bilinear
+buffer=10               !!buffer range for bilinear shape functions (used in TRA)
+equalize=0              !!redistribute tracers?
+tracer=1                !!temperature tracers?
+tpc=60                  !!# of tracers per cell corner
+dist_factor=1.d-4       !! <<1 controls min. dist between tracers and side boundaries during equalize
+!!!!!end tracer options
+
+!!!!!!!!!!!!!!!!!!!!Initial and Boundary Conditions
+restart=0               !!0= use analytic initial T and C, 1= use T (and possibly C -- see "add_layer" tracer option) from previous run
+initial_temp=-1         !!initial T: -1=user defined (initial_conditions.f90), 0 for conductive, 1 for convective cell (TBL scales with RaT), 2 alternate conductive
+initial_comp=-1         !!initial C: -1=user defined (initial_conditions.f90), 0=dense layer at base (dlayer), 1=sinusoidal deflection, 2=step function
+initial_temp_smooth=0   !!smooth the initial temperature field? (controlled by delta_visT_init)
+delta_visT_init=2.0d0   !!controls smoothing of the initial T field based upon viscosity dependence on T
+add_layer=0             !!add heterogenious composition to a previous isocompositional run when restarting?
+dlayer=0.5d0          !!for initial_comp=0 or 1: layer thickness
+dent=0.5d0              !!reference height for entrainment calculation
+klayer=35.d0            !!controls thickness of initial compositional interface (under development)
+
+!! reflecting sidewalls assumed
+Tbot=0 !!Bottom thermal BC: 0=isothermal, 1=insulating
+Vbc=0  !!Top and Bottom velocity BCs: 0=free-slip,1=rigid
+!!!!!!!!!!!!!!!!!!!!End Initial and Boundary Conditions
+/
+
+&Rayleigh_numbers
+!!!!!!!!!!!!!Rayleigh Numbers and Buoyancy
+RaT=1.d5                !!Thermal Rayleigh number
+!if (comp.eq.1) then
+! allocate(RaC(1:ntype))
+ RaC(1)=0.5d5           !!Compositional Rayleigh Number(s): >0 for increased density, <0 for decreased density
+! RaC(2)=-0.2d0*RaT           !!create as many terms as there are enriched compositions
+! RaC(3)=-0.4d0*RaT
+!end if
+!!!!!!!!!!!!!End Rayleigh Numbers and Buoyancy
+/
+
+&heating_conductivity
+!!!!!!!!!!Internal heating and Thermal Conductivity Options
+iheattype=1             !!=0 for constant (in each compositional component); =1 for variable (specify in energy.f90, local_time=0 only for now)
+H=0.d0                  !!internal heating rate of ambient material (for iheattype=0, i.e., constant H )
+!if (comp.eq.1) then
+! allocate(conduct_factor(1:ntype),Htype(1:ntype))
+ conduct_factor(1)=1.d0!2.d0  !!multiplier for nondimesnional conductivity within each compositional component (C is smoothed by delta_visC)
+! conduct_factor(2)=1.d0  !!create as many terms as there are enriched compositions
+! conduct_factor(3)=0.5d0  
+
+ Htype(1)=0.d0            !!set H value within components
+! Htype(2)=0.d0           !!create as many terms as there are enriched compositions
+! Htype(3)=20.d0
+!end if
+!!!!!!!!!!!Internal heating and Thermal Conductivity Options
+/
+
+&viscosity
+!!!!!!!!!viscosity options
+plastic=0                      !!plastic yielding: -1=development,0=none,1=Tosi et al., (2015), 2=Moresi and Solomatov (1998), 3=smoothed minimum
+ivis=0                         !!viscosity: 0=isoviscous, 1=T and z dependent, 2=dependence on z, T and C
+visP=1.d0                      !!for depth dependence (>1 for an increase with depth)
+visT=1.d3!1.d6                      !!for temperature dependence (>1 for decrease)
+delta_visT=2.d0                !!max allowed viscosity contrast due to T between adjacent grid points (T used to compute viscosity field is smoothed until this criterion is satisfied)
+eig_ratio_min=2.0d0            !!min ratio of diffusive to advective eigenvalues in streamfunction eqn (viscosity will be smoothed until this criterion is also satisfied)
+!if (comp.eq.1) then            !!composition dependence (>1 for decrease, <1 for increase)
+! allocate(visC(1:ntype),delta_visC(1:ntype))
+ visC(1)=1.d1
+ !visC(2)=1.d0  !!create as many terms as there are enriched compositions 
+ !visC(3)=1.d-2
+ delta_visC(1)=1.d0            !!max allowed viscosity/conductivity contrast due to C between adjacent grid points (multiplicative factor)
+ !delta_visC(2)=2.d0
+ !delta_visC(3)=2.d0
+!end if
+!!plastic yielding options:
+yield=1.d10                   !!yield stress at the surface (at zero strain-rate invariant) (plastic.ne.0)
+yield_gradient=0.d0           !!yield stress gradient (linear increase with depth) (plastic.ne.0)
+vis_star=0.d0                 !!constrains min. plastic viscosity (plastic=1)
+mpla=0.052822d0               !!exponent for strain-rate dependent yield stress (plastic=-1)
+Cpla=2.5453d0                 !!coefficient for strain-rate dependent yield stress (plastic=-1)
+alpha=-10.d0                  !!for smooth min function (plastic=3)
+/

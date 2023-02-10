@@ -1,0 +1,20 @@
+ Quad precision test:
+   1.00000000000000000000700000000000004         2.00000000000000000000002999999999999         3.00000000000000000000703000000000003      
+ conductivity delta_C=   2.0000000000000000     
+ T Smoothing Parameter:   2.0000000000000000     
+ C Smoothing Parameters:   2.0000000000000000     
+ nx,nz=         100         100
+ ntr=      612060
+ Nthreads=           4
+ RKC1 Fine Grid Smoother:
+ RKC1_stability=  -83.852981245559235     
+ subD,supD,ngrid=         303         303       10201
+ Entrainment Calculation:          50  0.50000000000000000     
+ Run Time=   2.8524549260037020      s
+ energy_time=   2.3226638250052929      s
+ advect_tracer=   1.4491069160285406      s
+ build_SF_matrix=  0.24728597502689809      s
+ solve_SF_equation=   5.1932234026025981E-002 s
+ compute_derivatives=   1.2891200894955546E-003 s
+ tracers_to_corners=  0.38129467400722206      s
+ time steps=           1
