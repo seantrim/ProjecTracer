@@ -1,4 +1,4 @@
-# ProjecTracer
+# ProjecTracer [![DOI](https://zenodo.org/badge/599500216.svg)](https://zenodo.org/badge/latestdoi/599500216)
 
 ## Contents
 1. [Background](#background)
