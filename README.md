@@ -3,13 +3,14 @@
 ## Contents
 1. [Background](#background)
 2. [Variable Definitions](#variable-definitions)
-3. [File Description](#file-description)
+3. [Governing Equations](#governing-equations)
+4. [File Description](#file-description)
     1. [Job Files](#job-files) 
     2. [H_routines](#h_routines)
     3. [ProjecTracer_Source](#projectracer_source)
     4. [plot_scripts](#plot_scripts)
-4. [How to Use](#how-to-use)
-5. [Legal](#legal)
+5. [How to Use](#how-to-use)
+6. [Legal](#legal)
 
 ## Background
 
@@ -20,12 +21,23 @@
 * $x$ = horizontal position ( $x \in [0,\lambda]$ )
 * $z$ = vertical position ( $z \in [0,1]$ , increasing upward)
 * $t$ = time
+* $\psi$ = stream function
+* $\mathbf{v}$ = velocity
 * $C$ = composition
 * $T$ = temperature
 * $H$ = internal heating rate
 * $\eta$ = viscosity
 
 ## Governing Equations
+
+### Conservation of Mass and Momentum: the Biharmonic Equation
+$\left(\frac{\partial^2}{\partial x^2}-\frac{\partial^2}{\partial z^2}\right) \left[ \eta \left(\frac{\partial^2 \psi}{\partial x^2}-\frac{\partial^2 \psi}{\partial z^2}\right) \right] + 4\frac{\partial^2}{\partial x \partial z} \left[ \eta \frac{\partial^2 \psi}{\partial x \partial z} \right] = Ra_T \frac{\partial T}{\partial x} - Ra_C \frac{\partial C}{\partial x}$
+
+### Conservation of Eneregy
+$\frac{\partial T}{\partial t}+\mathbf{v} \cdot \nabla T = \nabla^2 T+H$
+
+### Compositional Transport
+$\frac{\partial C}{\partial t}+\mathbf{v} \cdot \nabla C = 0$
 
 ## File Description
 
