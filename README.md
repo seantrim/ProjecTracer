@@ -63,14 +63,16 @@ $\frac{\partial C}{\partial t}+\mathbf{v} \cdot \nabla C = 0$
 
 ## How to Use
 
-1. Specify physical parameters and code options (e.g., aspect ratio, Rayleigh numbers, Courant number, etc.) in [inputs.nml](/inputs.nml)
+1. Specify physical parameters, boundary conditions, and code options (e.g., aspect ratio, Rayleigh numbers, Courant number, etc.) in [inputs.nml](/inputs.nml)
     * Entries in the Fortran namelist [inputs.nml](/inputs.nml) are fully commented
-2. Compile source code using [compile_script.sh](/compile_script.sh)
+2. Specify initial conditions for $T$ and $C$ in [initial_conditions.f90](/ProjecTracer_Source/initial_conditions.f90)
+    * Variable $H$ is specified in `compute_heating` subroutine in [energy.f90](/ProjecTracer_Source/energy.f90)
+3. Compile source code using [compile_script.sh](/compile_script.sh)
     * Linux: `$ source compile_script`
         * This produces the executable [ProjecTracer](/ProjecTracer)
     * gfortran 11.3.0 or later is recommended
     * Other compilers may be possible but results should be tested
-3. Run [ProjecTracer](/ProjecTracer) from the command line
+4. Run [ProjecTracer](/ProjecTracer) from the command line
     * Specify number of OpenMP processes in [run_job.sh](/run_job.sh) then run the script
     * Linux: `$ source run_job.sh`
         * Job will run in the background
