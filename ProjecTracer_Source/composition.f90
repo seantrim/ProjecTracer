@@ -815,10 +815,17 @@ ID=ID_start(rank)
     perturb_s=(perturb_s-0.5d0)*ds
     rtr(ID)=rcell+perturb_r   
     str(ID)=scell+perturb_s
-    if (rtr(ID).le.0.d0) rtr(ID)=0.d0 !dist_r
-    if (rtr(ID).ge.aspect) rtr(ID)=aspect !aspect-dist_r
-    if (str(ID).le.0.d0) str(ID)=0.d0 !dist_s
-    if (str(ID).ge.1.d0) str(ID)=1.d0 !1.d0-dist_s
+    if (boundary_tracers.eq.0) then !!no tracers at boundaries
+     if (rtr(ID).le.0.d0) rtr(ID)=dist_r
+     if (rtr(ID).ge.aspect) rtr(ID)=aspect-dist_r
+     if (str(ID).le.0.d0) str(ID)=dist_s
+     if (str(ID).ge.1.d0) str(ID)=1.d0-dist_s
+    elseif (boundary_tracers.eq.1) then !!allow tracers at boundaries
+     if (rtr(ID).le.0.d0) rtr(ID)=0.d0 !dist_r
+     if (rtr(ID).ge.aspect) rtr(ID)=aspect !aspect-dist_r
+     if (str(ID).le.0.d0) str(ID)=0.d0 !dist_s
+     if (str(ID).ge.1.d0) str(ID)=1.d0 !1.d0-dist_s
+    end if
     xtr=xgrid(rtr(ID))       !!!!!maybe interpolate these?? minor detail... 
     ztr=zgrid(str(ID))
     if (comp.eq.1) then

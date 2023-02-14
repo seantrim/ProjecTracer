@@ -42,7 +42,7 @@ Chebyshev=0             !!0=classical RK, 1=RK Chebyshev (RKC) method (torder=2 
 nstage=3                !!equals # of stages used in the RKC method
 damping=100.d0          !!damping parameter for RKC method
 aRK2=0.5d0              !!alpha value for RK2 time integration and first stage of RKC
-torder=4                !!order of RK method: RK2 only if temperature tracers are used - RK4 for field method and/or tracers (2 and 4 currently available)
+torder=4                !!order of RK method: 1=RK1, 2=RK2, 4=RK4 (1 and 2 may not be stable if field method for T is used)
 movie=0                 !!create movie files? (under development...)
 tmovie_snap=1.d0 !!time intervals for movie frames
 Nlocal=1000                  !!if local time steps ARE used, run controlled by iteration cutoff
@@ -62,6 +62,7 @@ CFL=0                   !!use velocity-dependent time steps? (for RK1 only)
 comp=1                  !!switch for composition: 0=off,1=on
 ntype=1                 !!# of enriched compositions:=0 for uniform composition with T tracers, >=1 for heterogenious composition
 iC_continuous=1         !!continuous C values carried by tracers? (for iC_continuous=1 equalize=0 AND ntype=1 are required)
+boundary_tracers=1      !!controls initial tracer positions near boundaries: 0=no tracers on boundaries, 1=start with tracers on boundaries 
 original=1              !!use original TRA? (short term isoviscous calculations)
 shape_function=1        !!0 for constant cell, 1 for bilinear
 buffer=10               !!buffer range for bilinear shape functions (used in TRA)

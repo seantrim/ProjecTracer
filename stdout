@@ -10,11 +10,11 @@
  RKC1_stability=  -83.852981245559235     
  subD,supD,ngrid=         303         303       10201
  Entrainment Calculation:          50  0.50000000000000000     
- Run Time=   3.6647514359792694      s
- energy_time=   3.2341492790146731      s
- advect_tracer=   2.0508973110117950      s
- build_SF_matrix=  0.23344728403026238      s
- solve_SF_equation=   4.6753356989938766E-002 s
- compute_derivatives=   1.6384869231842458E-003 s
- tracers_to_corners=  0.46261066402075812      s
+ Run Time=   3.3802934740087949      s
+ energy_time=   2.9470952930278145      s
+ advect_tracer=   1.9346868980792351      s
+ build_SF_matrix=  0.23374514508759603      s
+ solve_SF_equation=   4.6929112111683935E-002 s
+ compute_derivatives=   1.5886651817709208E-003 s
+ tracers_to_corners=  0.40895206789718941      s
  time steps=           1

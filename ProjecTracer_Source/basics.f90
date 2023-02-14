@@ -3,7 +3,7 @@ implicit none
 integer*4 :: nx,nz,ngrid,order,span,span1,spanT,local_time,subD,supD,restart,Database,initial_temp
 integer*4 :: Nsnap,Nout,fcount,Tbot,Vbc,tstep,RK_update,torder,Nthreads
 integer*4 :: comp,tpc,ntr,initial_comp,Dnumber,span_interp
-integer*4 :: tracer,equalize,ntype,iC_continuous,kent,nequalize,add_layer,gridX,gridZ,nbound
+integer*4 :: tracer,equalize,ntype,iC_continuous,boundary_tracers,kent,nequalize,add_layer,gridX,gridZ,nbound
 integer*4 :: iterate,grids,ngrid_coarse,kl,ku,analysis,iq_save,kq_save
 integer*4 :: mingrid,nsteps,initial_temp_smooth,smooth_vis,vis_iter
 integer*4, allocatable :: nx_grid(:),nz_grid(:),multi(:)
@@ -55,7 +55,7 @@ namelist /inputs/ aspect,nx,nz,Database,order,gridX,gridZ,thickness,nbound,space
                  &splitting,RKC1,nstageS,dampingS,c_2,c_1,&
                  &tend,tsnap,Chebyshev,nstage,damping,aRK2,torder,movie,tmovie_snap,Nlocal,Nsnap,local_time,dt_manual,& !!time stepping options
                  &courant,courantT,courantC,courant_stream,RK_update,vel_update,CFL,&
-                 &comp,ntype,iC_continuous,original,shape_function,buffer,equalize,tracer,tpc,dist_factor,& !!tracer options
+                 &comp,ntype,iC_continuous,boundary_tracers,original,shape_function,buffer,equalize,tracer,tpc,dist_factor,& !!tracer options
                  &restart,initial_temp,initial_comp,initial_temp_smooth,delta_visT_init,add_layer,dlayer,dent,klayer,Tbot,Vbc !!Initial and Boundary Conditions
 
 namelist /Rayleigh_numbers/ RaT,RaC !!Rayleigh Numbers and Buoyancy
