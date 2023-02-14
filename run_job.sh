@@ -7,6 +7,6 @@ mkdir -p movie_files
 rm -r movie_files
 mkdir  movie_files
 
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=2
 
 nohup ./ProjecTracer > stdout &

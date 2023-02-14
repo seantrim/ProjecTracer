@@ -5,16 +5,16 @@
  C Smoothing Parameters:   2.0000000000000000     
  nx,nz=         100         100
  ntr=      612060
- Nthreads=           4
+ Nthreads=           2
  RKC1 Fine Grid Smoother:
  RKC1_stability=  -83.852981245559235     
  subD,supD,ngrid=         303         303       10201
  Entrainment Calculation:          50  0.50000000000000000     
- Run Time=   2.8524549260037020      s
- energy_time=   2.3226638250052929      s
- advect_tracer=   1.4491069160285406      s
- build_SF_matrix=  0.24728597502689809      s
- solve_SF_equation=   5.1932234026025981E-002 s
- compute_derivatives=   1.2891200894955546E-003 s
- tracers_to_corners=  0.38129467400722206      s
+ Run Time=   3.6647514359792694      s
+ energy_time=   3.2341492790146731      s
+ advect_tracer=   2.0508973110117950      s
+ build_SF_matrix=  0.23344728403026238      s
+ solve_SF_equation=   4.6753356989938766E-002 s
+ compute_derivatives=   1.6384869231842458E-003 s
+ tracers_to_corners=  0.46261066402075812      s
  time steps=           1
