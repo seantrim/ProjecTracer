@@ -4,7 +4,10 @@
 1. [Background](#background)
 2. [Variable Definitions](#variable-definitions)
 3. [File Description](#file-description)
-    1. [H_routines](#H_routines)
+    1. [Job Files](#job-files) 
+    2. [H_routines](#h_routines)
+    3. [ProjecTracer_Source](#projectracer_source)
+    4. [plot_scripts](#plot_scripts)
 4. [How to Use](#how-to-use)
 5. [Legal](#legal)
 
@@ -26,11 +29,39 @@
 
 ## File Description
 
+### Job Files
+[compile_script.sh](/compile_script.sh)
+* Linux script for compiling Fortran source files
+
+[ProjecTracer](/ProjecTracer)
+* Exectutable for ProjecTracer code
+
+[run_job.sh](/run_job.sh)
+* Linux script for submitting local OpenMP jobs
+
 ### [H_routines](/H_routines)
 * Contains Fortran source files for the calculation of $H$ for certain problems
 * See https://github.com/seantrim/exact-thermochem-solution for details
 
+### [ProjecTracer_Source](/ProjecTracer_Source)
+* Fortran source code files for ProjecTracer code
+
+### [plot_scripts](/plot_scripts)
+* Gnuplot scripts for analysis and visualization
+
 ## How to Use
+
+1. Specify physical parameters and code options (e.g., aspect ratio, Rayleigh numbers, Courant number, etc.) in [inputs.nml](/inputs.nml)
+    * Entries in the Fortran namelist [inputs.nml](/inputs.nml) are fully commented
+2. Compile source code using [compile_script.sh](/compile_script.sh)
+    * Linux: `$ source compile_script`
+        * This produces the executable [ProjecTracer](/ProjecTracer)
+    * gfortran 11.3.0 or later is recommended
+    * Other compilers may be possible but results should be tested
+3. Run [ProjecTracer](/ProjecTracer) from the command line
+    * Specify number of OpenMP processes in [run_job.sh](/run_job.sh) then run the script
+    * Linux: `$ source run_job.sh`
+        * Job will run in the background
 
 ## Legal
 
