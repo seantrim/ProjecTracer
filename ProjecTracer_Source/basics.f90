@@ -16,6 +16,7 @@ real*8 :: RaT,V,visT,visP,H,yield,yield_gradient,klayer
 real*8, allocatable :: RaC(:),visC(:) !!added -- moved from arrays.f90
 integer*4 :: iheattype !!SJT: variable internal heating rate??
 real*8, allocatable :: conduct_factor(:),Htype(:) !!moved from arrays.f90
+real*8 :: Tbot_iso,Ttop_iso !!bottom/top temperature BC values
 real*8 :: Tr_max,Trr_max,Trrr_max,Trrrr_max,Ts_max,Tss_max,Tsss_max,Tssss_max
 real*8 :: Trs_max,Trrs_max,Trss_max,Trrss_max
 real*8 :: Tr_max_so,Ts_max_so,Trr_max_so,Tss_max_so,Tr_base_so,Trr_base_so
@@ -340,7 +341,7 @@ integer*4 :: i,k
 real*8 :: Tu,Tl,Tr,Ts,Q,u0,v0,x,z,temperature
 !$OMP PARALLEL DO PRIVATE(i,k,x,z)
  do i=0,nx
- x=xg(i)
+  x=xg(i)
   do k=0,nz
    z=zg(k)
    T(i,k)=temperature(x,z)
@@ -348,8 +349,13 @@ real*8 :: Tu,Tl,Tr,Ts,Q,u0,v0,x,z,temperature
  end do
 !$OMP END PARALLEL DO
 
-T(:,0)=1.d0  !!BCs
-T(:,nz)=0.d0
+Ttop_iso=T(0,nz) !!for top isothermal BC
+Tbot_iso=T(0,0)  !!for bottom isothermal BC
+T(:,0)=Tbot_iso  !!BCs
+T(:,nz)=Ttop_iso
+write(*,*) "Tbot_iso,Ttop_iso=",Tbot_iso,Ttop_iso
+!T(:,0)=1.d0  !!BCs -- OG
+!T(:,nz)=0.d0
  call enforceBCs(T)
  if (tracer.eq.0) call smoother_time_T(T)
 end

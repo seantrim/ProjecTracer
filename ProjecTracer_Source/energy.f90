@@ -1,4 +1,3 @@
-!real*8 function heating(i,k,tstage)
 subroutine compute_heating(i,k,tstage,heating)
 !!it is assumed that H at the top/bottom boundary does not vary with time (otherwise enforceBCs and extendT will need a time argument)
  use basics
@@ -575,8 +574,8 @@ do k=1,span
   !T0(:,-k)=-(T0(:,k)-1.d0)+1.d0 !!antisymmetry --- OG
   do i=-span,nx+span
    call compute_heating(i,kbot,tstage,heating)
-   T0(i,-k)=2.d0+2.d0/D2(0)*heating*ds2-T0(i,k) !!bottom boundary -- takes internal heating into account (uniform grid only)
-!   T0(i,-k)=2.d0+2.d0/D2(0)*heating(i,kbot,tstage)*ds2-T0(i,k) !!bottom boundary -- takes internal heating into account (uniform grid only)
+   !T0(i,-k)=2.d0+2.d0/D2(0)*heating*ds2-T0(i,k) !!bottom boundary -- takes internal heating into account (uniform grid only)
+   T0(i,-k)=2.d0*Tbot_iso+2.d0/D2(0)*heating*ds2-T0(i,k) !!bottom boundary -- takes internal heating into account (uniform grid only)
   end do
  elseif (Tbot.eq.1) then
   T0(:,-k)=T0(:,k) !!symmetry
@@ -584,12 +583,12 @@ do k=1,span
  !T0(:,nz+k)=-T0(:,nz-k) !!antisymmetry --- OG
  do i=-span,nx+span
   call compute_heating(i,ktop,tstage,heating)
-  T0(i,nz+k)=2.d0/D2(0)*heating*ds2-T0(i,nz-k) !!top boundary -- takes internal heating into account (uniform grid only)
-!  T0(i,nz+k)=2.d0/D2(0)*heating(i,ktop,tstage)*ds2-T0(i,nz-k) !!top boundary -- takes internal heating into account (uniform grid only)
+  !T0(i,nz+k)=2.d0/D2(0)*heating*ds2-T0(i,nz-k) !!top boundary -- takes internal heating into account (uniform grid only)
+  T0(i,nz+k)=2.d0*Ttop_iso+2.d0/D2(0)*heating*ds2-T0(i,nz-k) !!top boundary -- takes internal heating into account (uniform grid only)
  end do
 end do
- if (Tbot.eq.0) T0(:,0)=1.d0
-  T0(:,nz)=0.d0
+ if (Tbot.eq.0) T0(:,0)=Tbot_iso!1.d0
+  T0(:,nz)=Ttop_iso!0.d0
 end
 
 
@@ -613,8 +612,8 @@ real*8 :: heating
    !Textend(:,-k)=-(Textend(:,k)-1.d0)+1.d0 !!antisymmetry --- OG
    do i=-spanT,nx+spanT
     call compute_heating(i,kbot,tstage,heating)
-    Textend(i,-k)=2.d0+2.d0/D2(0)*heating*ds2-Textend(i,k) !!bottom boundary -- takes internal heating into account (uniform grid only)
-!    Textend(i,-k)=2.d0+2.d0/D2(0)*heating(i,kbot,tstage)*ds2-Textend(i,k) !!bottom boundary -- takes internal heating into account (uniform grid only)
+    !Textend(i,-k)=2.d0+2.d0/D2(0)*heating*ds2-Textend(i,k) !!bottom boundary -- takes internal heating into account (uniform grid only)
+    Textend(i,-k)=2.d0*Tbot_iso+2.d0/D2(0)*heating*ds2-Textend(i,k) !!bottom boundary -- takes internal heating into account (uniform grid only)
    end do
   elseif (Tbot.eq.1) then
    Textend(:,-k)=Textend(:,k) !!symmetry
@@ -622,12 +621,12 @@ real*8 :: heating
   !Textend(:,nz+k)=-Textend(:,nz-k) !!antisymmetry --- OG
   do i=-spanT,nx+spanT
    call compute_heating(i,ktop,tstage,heating)
-   Textend(i,nz+k)=2.d0/D2(0)*heating*ds2-Textend(i,nz-k) !!top boundary -- takes internal heating into account (uniform grid only)
-!   Textend(i,nz+k)=2.d0/D2(0)*heating(i,ktop,tstage)*ds2-Textend(i,nz-k) !!top boundary -- takes internal heating into account (uniform grid only)
+   !Textend(i,nz+k)=2.d0/D2(0)*heating*ds2-Textend(i,nz-k) !!top boundary -- takes internal heating into account (uniform grid only)
+   Textend(i,nz+k)=2.d0*Ttop_iso+2.d0/D2(0)*heating*ds2-Textend(i,nz-k) !!top boundary -- takes internal heating into account (uniform grid only) 
   end do
  end do
-  if (Tbot.eq.0) Textend(:,0)=1.d0
- Textend(:,nz)=0.d0
+  if (Tbot.eq.0) Textend(:,0)=Tbot_iso!1.d0
+ Textend(:,nz)=Ttop_iso!0.d0
 end
 
 subroutine derivative_eigenvalues

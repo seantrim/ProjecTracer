@@ -8,13 +8,14 @@
  Nthreads=           2
  RKC1 Fine Grid Smoother:
  RKC1_stability=  -83.852981245559235     
+ Tbot_iso,Ttop_iso=  0.99999999999999967        3.1525583800734926E-016
  subD,supD,ngrid=         303         303       10201
  Entrainment Calculation:          50  0.50000000000000000     
- Run Time=   3.3802934740087949      s
- energy_time=   2.9470952930278145      s
- advect_tracer=   1.9346868980792351      s
- build_SF_matrix=  0.23374514508759603      s
- solve_SF_equation=   4.6929112111683935E-002 s
- compute_derivatives=   1.5886651817709208E-003 s
- tracers_to_corners=  0.40895206789718941      s
+ Run Time=   3.3574525269796140      s
+ energy_time=   2.8305925430031493      s
+ advect_tracer=   1.8505501530016772      s
+ build_SF_matrix=  0.33310346899088472      s
+ solve_SF_equation=   4.3713053921237588E-002 s
+ compute_derivatives=   1.3121360098011792E-003 s
+ tracers_to_corners=  0.38612211297731847      s
  time steps=           1
