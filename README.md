@@ -46,7 +46,7 @@ $\frac{\partial C}{\partial t}+\mathbf{v} \cdot \nabla C = 0$
 * Linux script for compiling Fortran source files
 
 [ProjecTracer](/ProjecTracer)
-* Exectutable for ProjecTracer code
+* Executable for ProjecTracer code
 
 [run_job.sh](/run_job.sh)
 * Linux script for submitting local OpenMP jobs
